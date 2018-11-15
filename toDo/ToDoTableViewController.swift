@@ -15,12 +15,6 @@ class ToDoTableViewController: UITableViewController {
     
     var toDosPending = [ToDoItem]()
     var toDosCompleted = [ToDoItem]()
-
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        fetchToDos()
-//        tableView.reloadData()
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         fetchToDos()
@@ -41,14 +35,13 @@ class ToDoTableViewController: UITableViewController {
     @IBAction func addToDo(_ sender: UIBarButtonItem) {
         let toDoItem = ToDoItem(context: context)
         toDoItem.title = "New ToDo"
-        toDosPending.insert(toDoItem, at: 0)
         try? context.save()
         performSegue(withIdentifier: "editToDo", sender: toDoItem)
     }
     
-     // MARK: - Navigation
+    // MARK: - Navigation
     
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editToDo" {
             if let toDoItem = sender as? ToDoItem {
                 if let editToDoVC = segue.destination as? EditToDoViewController {
@@ -56,56 +49,70 @@ class ToDoTableViewController: UITableViewController {
                 }
             }
         }
-     }
-
+    }
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Pending" : "Completed"
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return toDosPending.count
-        }
-        return 0
+        return section == 0 ? toDosPending.count : toDosCompleted.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell", for: indexPath)
-        let toDo = toDosPending[indexPath.row]
+        let toDo = indexPath.section == 0 ? toDosPending[indexPath.row] : toDosCompleted[indexPath.row]
         cell.textLabel?.text = toDo.title
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let toDoItem = toDosPending[indexPath.row]
-        performSegue(withIdentifier: "editToDo", sender: toDoItem)
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        if indexPath.section == 0 {
             let toDoItem = toDosPending[indexPath.row]
-            toDosPending.remove(at: indexPath.row)
+            performSegue(withIdentifier: "editToDo", sender: toDoItem)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let toDoItem = indexPath.section == 0 ? toDosPending[indexPath.row] : toDosCompleted[indexPath.row]
+        let completedAction = UIContextualAction(style: .normal, title: "Done") { (action, view, handler) in
+            toDoItem.completed = !toDoItem.completed
+            try? self.context.save()
+            self.fetchToDos()
+            tableView.reloadData()
+        }
+        completedAction.backgroundColor = UIColor.green
+        return UISwipeActionsConfiguration(actions: [completedAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let toDoItem = indexPath.section == 0 ? toDosPending[indexPath.row] : toDosCompleted[indexPath.row]
+        if editingStyle == .delete {
             context.delete(toDoItem)
             try? context.save()
+            fetchToDos()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
 }
