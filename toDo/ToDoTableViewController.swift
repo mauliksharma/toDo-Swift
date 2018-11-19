@@ -16,6 +16,12 @@ class ToDoTableViewController: UITableViewController {
     var toDosPending = [ToDoItem]()
     var toDosCompleted = [ToDoItem]()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.view.backgroundColor = UIColor(patternImage: UIImage(named: "paper.jpg")!)
+        tableView.backgroundColor = UIColor.clear
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         fetchToDos()
         tableView.reloadData()
@@ -26,7 +32,7 @@ class ToDoTableViewController: UITableViewController {
         if let toDoItems = try? context.fetch(request) {
             toDosPending = []
             toDosCompleted = []
-            toDoItems.forEach { toDoItem in
+            toDoItems.reversed().forEach { toDoItem in
                 if !toDoItem.completed { toDosPending.append(toDoItem) } else { toDosCompleted.append(toDoItem) }
             }
         }
@@ -34,7 +40,6 @@ class ToDoTableViewController: UITableViewController {
     
     @IBAction func addToDo(_ sender: UIBarButtonItem) {
         let toDoItem = ToDoItem(context: context)
-        toDoItem.title = "New ToDo"
         try? context.save()
         performSegue(withIdentifier: "editToDo", sender: toDoItem)
     }
@@ -58,7 +63,13 @@ class ToDoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Pending" : "Completed"
+        if section == 0, !toDosPending.isEmpty {
+            return "Pending"
+        }
+        if section == 1, !toDosCompleted.isEmpty {
+            return "Completed"
+        }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,9 +78,23 @@ class ToDoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell", for: indexPath)
+        
         let toDo = indexPath.section == 0 ? toDosPending[indexPath.row] : toDosCompleted[indexPath.row]
+        
         cell.textLabel?.text = toDo.title
+        if let date = toDo.date, let time = toDo.time {
+            let timeStamp = "\(date) \(time)"
+            cell.detailTextLabel?.text = timeStamp
+            cell.detailTextLabel?.textColor = UIColor.lightGray
+        }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 1 {
+            return nil
+        }
+        return indexPath
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -81,10 +106,11 @@ class ToDoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let toDoItem = indexPath.section == 0 ? toDosPending[indexPath.row] : toDosCompleted[indexPath.row]
-        let completedAction = UIContextualAction(style: .normal, title: "Done") { (action, view, handler) in
+        let completedAction = UIContextualAction(style: .normal, title: indexPath.section == 0 ? "Done" : "Not Done")
+        { (action, view, handler) in
             toDoItem.completed = !toDoItem.completed
             try? self.context.save()
-            self.fetchToDos()
+            self.fetchToDos()            
             tableView.reloadData()
         }
         completedAction.backgroundColor = UIColor.green

@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoCell" textLabel="6sR-Hg-1qi" style="IBUITableViewCellStyleDefault" id="uMt-qn-Mv0">
+                            <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toDoCell" textLabel="6sR-Hg-1qi" detailTextLabel="niu-2w-Lnx" style="IBUITableViewCellStyleValue1" id="uMt-qn-Mv0">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uMt-qn-Mv0" id="u3d-Lr-vuo">
@@ -27,14 +27,23 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6sR-Hg-1qi">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="niu-2w-Lnx">
+                                            <rect key="frame" x="315" y="12" width="44" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -61,50 +70,33 @@
         <scene sceneID="d1f-p3-1Gn">
             <objects>
                 <viewController id="sJd-ss-cxC" customClass="EditToDoViewController" customModule="toDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aQ7-yy-PoA">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="aQ7-yy-PoA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z76-wT-pX4">
-                                <rect key="frame" x="16" y="132" width="35.5" height="20.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="14" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Rfd-wL-LaW">
+                                <rect key="frame" x="16" y="132" width="343" height="36"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Rfd-wL-LaW">
-                                <rect key="frame" x="16" y="160.5" width="343" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5v-jV-14S">
-                                <rect key="frame" x="16" y="206.5" width="92.5" height="21"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UOY-RM-K2l">
-                                <rect key="frame" x="16" y="235.5" width="343" height="415.5"/>
-                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.75018728595890416" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="16" y="176" width="343" height="475"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="UOY-RM-K2l" firstAttribute="top" secondItem="Q5v-jV-14S" secondAttribute="bottom" constant="8" symbolic="YES" id="208-Bl-xP2"/>
-                            <constraint firstItem="Rfd-wL-LaW" firstAttribute="top" secondItem="Z76-wT-pX4" secondAttribute="bottom" constant="8" symbolic="YES" id="AiB-u5-oxq"/>
                             <constraint firstItem="UOY-RM-K2l" firstAttribute="leading" secondItem="gec-d0-4bi" secondAttribute="leading" constant="16" id="EN6-TY-LMU"/>
-                            <constraint firstItem="Q5v-jV-14S" firstAttribute="leading" secondItem="gec-d0-4bi" secondAttribute="leading" constant="16" id="PWC-N4-kPc"/>
                             <constraint firstItem="gec-d0-4bi" firstAttribute="trailing" secondItem="Rfd-wL-LaW" secondAttribute="trailing" constant="16" id="UD6-Mr-MDP"/>
-                            <constraint firstItem="gec-d0-4bi" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Q5v-jV-14S" secondAttribute="trailing" id="Wvd-HP-gr0"/>
                             <constraint firstItem="gec-d0-4bi" firstAttribute="trailing" secondItem="UOY-RM-K2l" secondAttribute="trailing" constant="16" id="d6E-hM-eLL"/>
                             <constraint firstItem="Rfd-wL-LaW" firstAttribute="leading" secondItem="gec-d0-4bi" secondAttribute="leading" constant="16" id="iRY-96-zit"/>
-                            <constraint firstItem="gec-d0-4bi" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Z76-wT-pX4" secondAttribute="trailing" constant="16" id="kmo-b7-GPH"/>
-                            <constraint firstItem="Z76-wT-pX4" firstAttribute="leading" secondItem="gec-d0-4bi" secondAttribute="leading" constant="16" id="n6p-7N-CCd"/>
                             <constraint firstItem="gec-d0-4bi" firstAttribute="bottom" secondItem="UOY-RM-K2l" secondAttribute="bottom" constant="16" id="nM1-9l-rbg"/>
-                            <constraint firstItem="Z76-wT-pX4" firstAttribute="top" secondItem="gec-d0-4bi" secondAttribute="top" constant="16" id="plQ-zG-7WY"/>
-                            <constraint firstItem="Q5v-jV-14S" firstAttribute="top" secondItem="Rfd-wL-LaW" secondAttribute="bottom" constant="16" id="tfT-ix-9bB"/>
+                            <constraint firstItem="UOY-RM-K2l" firstAttribute="top" secondItem="Rfd-wL-LaW" secondAttribute="bottom" constant="8" id="opb-ZD-cVE"/>
+                            <constraint firstItem="Rfd-wL-LaW" firstAttribute="top" secondItem="gec-d0-4bi" secondAttribute="top" constant="16" id="zTr-QT-8tq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gec-d0-4bi"/>
                     </view>
